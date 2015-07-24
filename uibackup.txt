@@ -1,0 +1,27 @@
+library(shiny)
+source("listfiles.R")
+
+ui <- fluidPage(
+  
+  #the following UI must be in a sidebar panel  
+  uiOutput("stocknames"),
+  
+  #THE FOLLOWING THINGS ARE FOR RESEARCH PURPOSE ONLY
+  actionButton("calculate","calculate"),
+  verbatimTextOutput("text"),
+  verbatimTextOutput("winner"),
+  
+  actionButton("plothemall","plothemall"),
+  
+  #THE FOLLOWING PLOT SHOULD COME IN TAB1
+  plotOutput("polytrend"),
+  
+  #THE FOLLOWING PLOT SHOULD COME IN TAB2
+  plotOutput("stltrend"),
+  
+  #THE FOLLOWING PLOT SHOULD COME IN TAB3
+  plotOutput("actualtrend"),
+  
+  #THE FOLLOWING PLOT SHOULD COME IN TAB4
+  plotOutput("alllinestrend")
+)

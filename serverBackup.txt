@@ -1,0 +1,83 @@
+library(shiny)
+source("listfiles.R")
+source("runner.R")
+source("polynomialplot.R")
+source("stlplot.R")
+source("actualplot.R")
+source("alllines.R")
+
+server <- function(input,output){
+  
+    #THESE TWO LINES RENDER THE DROP DOWN LIST DYNAMICALLY
+    ########################################################################
+      stock_names <- reactive({
+        return(listfiles())
+      })
+      output$stocknames <- renderUI({
+        selectInput("choices","Select your choice",choices = stock_names())
+      })
+    ########################################################################
+    
+      
+    #THIS IS THE MOTHER OF ALL REACTIVE CALCULATIONS THAT WE SHALL BE DOING
+    #THE FUNDAMENTAL OUTPUT IS THE CHOICE OF ON WHICH STOCK TO WORK
+    ########################################################################  
+      best_predict <- reactive({
+        input$choices
+      })
+    ########################################################################  
+      
+    
+    #THIS EVENT LISTENS FOR THE BUTTON PRESS AND THE GIVES THE PREDICTED RESULT  
+    ########################################################################  
+      predicted_winner <- eventReactive(input$calculate,{
+        return(runner(best_predict()))
+      })
+     ########################################################################  
+    
+    #PRINTING THE WINNING MODEL
+    ########################################################################  
+      output$winner <- renderPrint({
+        paste("Winner for ",best_predict()," is ",predicted_winner(),sep = "")
+      })
+    ########################################################################    
+    
+      
+    #THESE LINES PRINT THE CURRENTLY SELECTED INPUT(MAY BE REMOVED)
+    ########################################################################
+      output$text <- renderPrint({
+        paste("Now calculating all the predictions for",best_predict(),sep=" ")
+      })
+    ########################################################################
+
+  
+    #THE FOLLOWING LINES RENDER A PLOT TO THE APP
+    ########################################################################      
+      output$polytrend <- renderPlot({
+        return(polynomialplot(best_predict()))
+      })
+      
+      
+    ########################################################################
+      
+      #THE FOLLOWING LINES RENDER A PLOT TO THE APP
+      ########################################################################      
+      output$stltrend <- renderPlot({
+        return(stlplot(best_predict()))
+      })
+      ########################################################################
+      
+      #THE FOLLOWING LINES RENDER A PLOT TO THE APP
+      ########################################################################      
+      output$actualtrend <- renderPlot({
+        return(actualplot(best_predict()))
+      })
+      ########################################################################
+      
+      #THE FOLLOWING LINES RENDER A PLOT TO THE APP
+      ########################################################################      
+      output$alllinestrend <- renderPlot({
+        return(alllines(best_predict()))
+      })
+      ########################################################################
+}
