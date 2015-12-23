@@ -10,9 +10,9 @@ runner <- function(choice){
     stockVector = list()
     stockVector[[1]] = read.table(paste("/home/ubuntu/ShinyApps/spredict/stocks/",choice,".csv",sep = ""), sep=",", header=TRUE)
     
-    BestPrediction[1] = findBestPrediction(stockVector[[1]])
-        
-    cat("\n\n!!! winning models:", BestPrediction[1]);
+    #BestPrediction[1] = findBestPrediction(stockVector[[1]])
+    
+    check_here = findBestPrediction(stockVector[[1]])
     
     prediction_name = c("Arima auto on actual function","0","0","Neural Networks on actual function",
                         "Holt winters on actual function","0","Arima auto on STL trend",
@@ -25,9 +25,10 @@ runner <- function(choice){
                         "Lower bound prediction of HoltWinters","Upper Bound prediction of HoltWinters")
     
     for(i in 1:length(prediction_name)){
-      if(BestPrediction[1]==i){
-        tobereturned <- prediction_name[i]
+      if(check_here[1]==i){
+        model_name <- prediction_name[i]
       }
     }
+    tobereturned <- c(model_name,check_here[2])
     return (tobereturned)
 }

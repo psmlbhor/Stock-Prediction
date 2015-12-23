@@ -271,9 +271,13 @@ tryCatch({
         # Find best Prediction
         
         best = which.min(mae[1:25,5])
+        min_error = mae[best,5]
         
-        cat(" - winning model ID:", best )
         
-        return (best)
+        tobereturned <- c(best,min_error)
+        
+        #cat("Winning Model ID:", best )
+        
+        return (tobereturned)
 }
     }, error=function(e) { cat("findBestPrediction failed for:",Stockadd); });

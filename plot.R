@@ -4,7 +4,7 @@ library(fpp)
 #reading in data
 #please replace the above address with yours
 ##########################################################################################
-Stock = read.table("/home/ubuntu/r-stockPrediction-master/input/ABC.csv",sep = ",",header = TRUE)
+Stock = read.table("/home/ubuntu/ShinyApps/spredict/stocks/ABC.csv",sep = ",",header = TRUE)
 
 #converting to month is not needed when you download monthly data
 #Stock$Date = as.Date(Stock$Date)
